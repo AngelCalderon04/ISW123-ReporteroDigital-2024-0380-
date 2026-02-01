@@ -13,16 +13,28 @@ class Program
             Console.WriteLine("EVENTO: " + mensaje);
         };
 
-        Task<string> textoTask = reportero.ObtenerTextoAsync();
-        Task<string> imagenTask = reportero.ObtenerImagenAsync();
-        Task<string> analisisTask = reportero.ObtenerAnalisisAsync();
+        try
+        {
+            Task<string> textoTask = reportero.ObtenerTextoAsync();
+            Task<string> imagenTask = reportero.ObtenerImagenAsync();
+            Task<string> analisisTask = reportero.ObtenerAnalisisAsync();
 
-        await Task.WhenAll(textoTask, imagenTask, analisisTask);
+            await Task.WhenAll(textoTask, imagenTask, analisisTask);
 
-        Console.WriteLine(textoTask.Result);
-        Console.WriteLine(imagenTask.Result);
-        Console.WriteLine(analisisTask.Result);
+            Console.WriteLine(textoTask.Result);
+            Console.WriteLine(imagenTask.Result);
+            Console.WriteLine(analisisTask.Result);
+        }
+        catch (ErrorDeRedException ex)
+        {
+            Console.WriteLine("Error de red: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error inesperado: " + ex.Message);
+        }
     }
+
 
     // Excepcion personalizada para errores de red
     public class ErrorDeRedException : Exception
