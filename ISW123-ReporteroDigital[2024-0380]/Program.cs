@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 class Program
 {
@@ -14,20 +15,20 @@ class Program
 
         Task<string> textoTask = reportero.ObtenerTextoAsync();
         Task<string> imagenTask = reportero.ObtenerImagenAsync();
+        Task<string> analisisTask = reportero.ObtenerAnalisisAsync();
 
-        await Task.WhenAll(textoTask, imagenTask);
+        await Task.WhenAll(textoTask, imagenTask, analisisTask);
 
         Console.WriteLine(textoTask.Result);
         Console.WriteLine(imagenTask.Result);
+        Console.WriteLine(analisisTask.Result);
     }
 
     // Excepcion personalizada para errores de red
     public class ErrorDeRedException : Exception
     {
         public ErrorDeRedException(string mensaje) : base(mensaje) { }
-    }
-
-    
+    } 
     public class ReporteroDigital
     {
         public event Action<string> FuenteCompletada;
@@ -46,10 +47,12 @@ class Program
             return "ImagenNoticia.jpg";
         }
 
+        public async Task<string> ObtenerAnalisisAsync()
+        {
+            await Task.Delay(1000);
+            FuenteCompletada?.Invoke("Análisis cargado");
+            return "Analisis del periodista.";
+        }
+
     }
-
-
-
-
-
 }
