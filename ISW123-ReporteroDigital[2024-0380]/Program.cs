@@ -69,7 +69,7 @@ class Program
         public async Task<string> ObtenerAnalisisAsync()
         {
             await Task.Delay(1000);
-            FuenteCompletada?.Invoke("Análisis cargado");
+            FuenteCompletada?.Invoke("Analisis cargado");
             return "Analisis del periodista.";
         }
 
