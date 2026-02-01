@@ -55,6 +55,13 @@ class Program
         public async Task<string> ObtenerImagenAsync()
         {
             await Task.Delay(1500);
+
+            bool fallo = false; 
+            if (fallo)
+            {
+                throw new ErrorDeRedException("Error al cargar la imagen");
+            }
+
             FuenteCompletada?.Invoke("Imagen cargada");
             return "ImagenNoticia.jpg";
         }
